@@ -1,1 +1,1 @@
-# 15.03.2018г. Добавлены файлы по выполнению задания по первому дню обучения и задания №6 со второго дня обучения.
+# 15.03.2018г. Added files for the task on the first day of training and task number 6 from the second day of training.
