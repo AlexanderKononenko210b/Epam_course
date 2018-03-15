@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetrologyEntitties", "MetrologyEntitties\MetrologyEntitties.csproj", "{8C1EFCC3-A82A-4FAE-8288-0085E239582C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{78F3E3F1-3D79-4B97-AE69-036F2AD9512F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C1EFCC3-A82A-4FAE-8288-0085E239582C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1EFCC3-A82A-4FAE-8288-0085E239582C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1EFCC3-A82A-4FAE-8288-0085E239582C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1EFCC3-A82A-4FAE-8288-0085E239582C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F3E3F1-3D79-4B97-AE69-036F2AD9512F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F3E3F1-3D79-4B97-AE69-036F2AD9512F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F3E3F1-3D79-4B97-AE69-036F2AD9512F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F3E3F1-3D79-4B97-AE69-036F2AD9512F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {55EF8918-FC9D-4E35-9E74-26AA6765A8B4}
+	EndGlobalSection
+EndGlobal
