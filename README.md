@@ -1,3 +1,5 @@
+NET.S.2018.Kononenko.02
+
 Implement the methods of quick sorting and sorting by merge for an integer array (project type Class Library). Test the work of methods using the test framework MS Tests.
 
 
