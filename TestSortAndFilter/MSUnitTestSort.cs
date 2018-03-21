@@ -12,8 +12,6 @@ namespace TestSortAndFilter
     {
         private int[] _inputArray;
 
-        private int[] _outputArray = new int[100000];
-
         /// <summary>
         /// Constructor for create instance of MSUnitTestSort class
         /// </summary>
@@ -34,11 +32,9 @@ namespace TestSortAndFilter
         [TestMethod]
         public void QuickSort_InputArrayAsArgument_InputArrayReturned_With_Valid_Data()
         {
-            _inputArray.CopyTo(_outputArray, 0);
+            SortAndFilter.QuickSort(ref _inputArray);
 
-            SortAndFilter.QuickSort(_outputArray);
-
-            Assert.IsTrue(SortAndFilter.IsSort(_outputArray, TypeSortArray.Descend));
+            Assert.IsTrue(SortAndFilter.IsSort(ref _inputArray, TypeSortArray.Descend));
 
         }
 
@@ -48,11 +44,11 @@ namespace TestSortAndFilter
         [TestMethod]
         public void MergeSort_InputArrayAsArgument_InputArrayReturned_With_Valid_Data()
         {
-            _inputArray.CopyTo(_outputArray, 0);
+            _inputArray.CopyTo(_inputArray, 0);
 
-            SortAndFilter.MergeSort(_outputArray);
+            SortAndFilter.MergeSort(ref _inputArray);
 
-            Assert.IsTrue(SortAndFilter.IsSort(_outputArray, TypeSortArray.Ascend));
+            Assert.IsTrue(SortAndFilter.IsSort(ref _inputArray, TypeSortArray.Ascend));
         }
 
         /// <summary>
@@ -63,9 +59,9 @@ namespace TestSortAndFilter
         [ExpectedException(typeof(ArgumentNullException))]
         public void QuickSort_If_Input_Array_Is_Null()
         {
-            _outputArray = null;
+            _inputArray = null;
 
-            SortAndFilter.QuickSort(this._outputArray);
+            SortAndFilter.QuickSort(ref _inputArray);
         }
 
         /// <summary>
@@ -76,9 +72,9 @@ namespace TestSortAndFilter
         [ExpectedException(typeof(ArgumentNullException))]
         public void MergeSort_If_Input_Array_Is_Null()
         {
-            _outputArray = null;
+            _inputArray = null;
 
-            SortAndFilter.MergeSort(this._outputArray);
+            SortAndFilter.MergeSort(ref _inputArray);
         }
 
         /// <summary>
@@ -89,9 +85,9 @@ namespace TestSortAndFilter
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void QuickSort_If_Input_Array_Length_Is_0()
         {
-            _outputArray = new int[0];
+            _inputArray = new int[0];
 
-            SortAndFilter.QuickSort(_outputArray);
+            SortAndFilter.QuickSort(ref _inputArray);
         }
 
         /// <summary>
@@ -102,9 +98,9 @@ namespace TestSortAndFilter
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MergeSort_If_Input_Array_Length_Is_0()
         {
-            _outputArray = new int[0];
+            _inputArray = new int[0];
 
-            SortAndFilter.MergeSort(_outputArray);
+            SortAndFilter.MergeSort(ref _inputArray);
         }
     }
 }

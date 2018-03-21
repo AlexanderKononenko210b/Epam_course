@@ -14,11 +14,6 @@ namespace MSUnitFilterDigit
         private int[] _inputArray;
 
         /// <summary>
-        /// output array
-        /// </summary>
-        private int[] _outputArray;
-
-        /// <summary>
         /// field type stopwatch
         /// </summary>
         private Stopwatch _watch = new Stopwatch();
@@ -43,11 +38,11 @@ namespace MSUnitFilterDigit
         [TestMethod]
         public void MsTest_SlowFilterDigit_InputArrayAsArgument_OutputArrayReturned_With_Valid_Data()
         {
-            _outputArray = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
 
-            for(int itemArray = 0; itemArray < _outputArray.Length; itemArray++)
+            for(int itemArray = 0; itemArray < _inputArray.Length; itemArray++)
             {
-                Assert.IsTrue(SortAndFilter.IsDigit(_outputArray[itemArray], 6));
+                Assert.IsTrue(SortAndFilter.IsDigit(_inputArray[itemArray], 6));
             }
         }
 
@@ -57,11 +52,11 @@ namespace MSUnitFilterDigit
         [TestMethod]
         public void MsTest_QuickFilterDigit_InputArrayAsArgument_OutputArrayReturned_With_Valid_Data()
         {
-            _outputArray = SortAndFilter.QuickFilterDigit(_inputArray, 6);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, 6);
 
-            for (int itemArray = 0; itemArray < _outputArray.Length; itemArray++)
+            for (int itemArray = 0; itemArray < _inputArray.Length; itemArray++)
             {
-                Assert.IsTrue(SortAndFilter.IsDigit(_outputArray[itemArray], 6));
+                Assert.IsTrue(SortAndFilter.IsDigit(_inputArray[itemArray], 6));
             }
         }
 
@@ -74,12 +69,12 @@ namespace MSUnitFilterDigit
         {
             _watch.Reset();
             _watch.Start();
-            var _outputSlowFilter = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
             _watch.Stop();
             var slowTime = _watch.ElapsedMilliseconds;
             _watch.Reset();
             _watch.Start();
-            var _outputQuickFilter = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
             _watch.Stop();
             var quickTime = _watch.ElapsedMilliseconds;
             Assert.IsTrue(slowTime > quickTime);
@@ -95,7 +90,7 @@ namespace MSUnitFilterDigit
         {
             this._inputArray = null;
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
         }
 
         /// <summary>
@@ -108,7 +103,7 @@ namespace MSUnitFilterDigit
         {
             _inputArray = null;
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, 6);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, 6);
         }
 
         /// <summary>
@@ -121,7 +116,7 @@ namespace MSUnitFilterDigit
         {
             _inputArray = new int[0];
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
         }
 
         /// <summary>
@@ -134,7 +129,7 @@ namespace MSUnitFilterDigit
         {
             _inputArray = new int[0];
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, 6);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, 6);
         }
 
         /// <summary>
@@ -147,7 +142,7 @@ namespace MSUnitFilterDigit
         {
             int number = -1;
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, number);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, number);
         }
 
         /// <summary>
@@ -160,7 +155,7 @@ namespace MSUnitFilterDigit
         {
             int number = -1;
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, number);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, number);
         }
 
         /// <summary>
@@ -173,7 +168,7 @@ namespace MSUnitFilterDigit
         {
             int number = 10;
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, number);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, number);
         }
 
         /// <summary>
@@ -186,7 +181,7 @@ namespace MSUnitFilterDigit
         {
             int number = 10;
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, number);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, number);
         }
 
         /// <summary>
@@ -199,7 +194,7 @@ namespace MSUnitFilterDigit
         {
             Random random = new Random(0);
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, random.Next(20000000, 200000000));
+            SortAndFilter.SlowFilterDigit(ref _inputArray, random.Next(20000000, 200000000));
         }
 
         /// <summary>
@@ -212,7 +207,7 @@ namespace MSUnitFilterDigit
         {
             Random random = new Random(0);
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, random.Next(20000000, 200000000));
+            SortAndFilter.QuickFilterDigit(ref _inputArray, random.Next(20000000, 200000000));
         }
 
         /// <summary>
@@ -227,7 +222,7 @@ namespace MSUnitFilterDigit
         {
             Random random = new Random(0);
 
-            var assert1 = SortAndFilter.SlowFilterDigit(_inputArray, random.Next(20000000, 200000000));
+            SortAndFilter.SlowFilterDigit(ref _inputArray, random.Next(20000000, 200000000));
         }
 
         /// <summary>
@@ -240,7 +235,7 @@ namespace MSUnitFilterDigit
         {
             Random random = new Random(0);
 
-            var assert1 = SortAndFilter.QuickFilterDigit(_inputArray, random.Next(-20000000, -200000000));
+            SortAndFilter.QuickFilterDigit(ref _inputArray, random.Next(-20000000, -200000000));
         }
     }
 }

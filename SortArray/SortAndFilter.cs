@@ -22,7 +22,7 @@ namespace SortAndFilterArray
         /// </summary>
         /// <param name="inputArray">input one-dimensional array</param>
         /// <returns>rezalt array</returns>
-        public static void QuickSort(int[] inputArray)
+        public static void QuickSort(ref int[] inputArray)
         {
             if (inputArray == null)
             {
@@ -36,7 +36,7 @@ namespace SortAndFilterArray
 
             if (inputArray.Length > 1)
             {
-                QuickSortHelper(inputArray, 0, inputArray.Length - 1);
+                QuickSortHelper(ref inputArray, 0, inputArray.Length - 1);
             }
         }
 
@@ -48,7 +48,7 @@ namespace SortAndFilterArray
         /// recursively call the MergeSort.
         /// </summary>
         /// <param name="inputArray">input array</param>
-        public static void MergeSort(int[] inputArray)
+        public static void MergeSort(ref int[] inputArray)
         {
             if (inputArray == null)
             {
@@ -67,15 +67,15 @@ namespace SortAndFilterArray
 
             if (array1.Length > 1)
             {
-                MergeSort(array1);
+                MergeSort(ref array1);
             }
 
             if (array2.Length > 1)
             {
-                MergeSort(array2);
+                MergeSort(ref array2);
             }
 
-            MergeSortHelper(inputArray, array1, array2);
+            MergeSortHelper(ref inputArray, ref array1, ref array2);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input one-dimensional array</param>
         /// <param name="numberOfIndexLeft">the index of the left element of the array</param>
         /// <param name="numberOfIndexRight">the index of the right element of the array</param>
-        private static void QuickSortHelper(int[] inputArray, int numberOfIndexLeft, int numberOfIndexRight)
+        private static void QuickSortHelper(ref int[] inputArray, int numberOfIndexLeft, int numberOfIndexRight)
         {
             int i = numberOfIndexLeft,
                 j = numberOfIndexRight, 
@@ -120,12 +120,12 @@ namespace SortAndFilterArray
 
             if (i < numberOfIndexRight)
             {
-                QuickSortHelper(inputArray, i, numberOfIndexRight);
+                QuickSortHelper(ref inputArray, i, numberOfIndexRight);
             }
 
             if (numberOfIndexLeft < j)
             {
-                QuickSortHelper(inputArray, numberOfIndexLeft, j);
+                QuickSortHelper(ref inputArray, numberOfIndexLeft, j);
             }
         }
 
@@ -137,7 +137,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="array1">first array</param>
         /// <param name="array2">second array</param>
-        private static void MergeSortHelper(int[] inputArray, int[] array1, int[] array2)
+        private static void MergeSortHelper(ref int[] inputArray, ref int[] array1, ref int[] array2)
         {
             int indexOfArray1 = 0, indexOfArray2 = 0;
 
@@ -176,7 +176,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="digit">number - filter</param>
         /// <returns>output array with element that contains digit</returns>
-        public static int[] SlowFilterDigit(int[] inputArray, int digit)
+        public static void SlowFilterDigit(ref int[] inputArray, int digit)
         {
             // check the empty array
             if (inputArray == null)
@@ -202,7 +202,6 @@ namespace SortAndFilterArray
                 throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be less than 2 147 483 647");
             }
 
-            // flag exist numeral in element array
             bool flag = false;
 
             // digit as char
@@ -231,7 +230,7 @@ namespace SortAndFilterArray
                 }
             }
 
-            return rezaltCollection.ToArray();
+            inputArray = rezaltCollection.ToArray();
         }
 
         /// <summary>
@@ -240,7 +239,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="digit">number - filter</param>
         /// <returns>output array with element that contains digit</returns>
-        public static int[] QuickFilterDigit(int[] inputArray, int digit)
+        public static void QuickFilterDigit(ref int[] inputArray, int digit)
         {
             if (inputArray == null)
             {
@@ -272,7 +271,7 @@ namespace SortAndFilterArray
                 }
             }
 
-            return rezaltCollection.ToArray();
+            inputArray = rezaltCollection.ToArray();
 
         }
 
@@ -308,7 +307,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="typeSort">type sort</param>
         /// <returns>true if array is an array sorted and false if not sorted</returns>
-        public static bool IsSort(int [] inputArray, TypeSortArray typeSort)
+        public static bool IsSort(ref int [] inputArray, TypeSortArray typeSort)
         {
             int flagIsSort = 0;
 

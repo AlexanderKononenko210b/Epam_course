@@ -14,11 +14,6 @@ namespace NUnitTestFilterDigit
         private int[] _inputArray;
 
         /// <summary>
-        /// output array
-        /// </summary>
-        private int[] _outputArray;
-
-        /// <summary>
         /// field type stopwatch
         /// </summary>
         private Stopwatch _watch = new Stopwatch();
@@ -42,13 +37,13 @@ namespace NUnitTestFilterDigit
         /// Test with valid data for the method SlowFilterDigit
         /// </summary>
         [Test]
-        public void NUnitTest_SlowFilterDigit_InputArrayAsArgument_OutputArrayReturned_With_Valid_Data()
+        public void NUnitTest_SlowFilterDigit_InputArrayAsArgument_inputArrayReturned_With_Valid_Data()
         {
-            _outputArray = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
 
-            for (int itemArray = 0; itemArray < _outputArray.Length; itemArray++)
+            for (int itemArray = 0; itemArray < _inputArray.Length; itemArray++)
             {
-                Assert.IsTrue(SortAndFilter.IsDigit(_outputArray[itemArray], 6));
+                Assert.IsTrue(SortAndFilter.IsDigit(_inputArray[itemArray], 6));
             }
         }
 
@@ -56,13 +51,13 @@ namespace NUnitTestFilterDigit
         /// Test with valid data for the method QuickFilterDigit
         /// </summary>
         [Test]
-        public void NUnitTest_QuickFilterDigit_InputArrayAsArgument_OutputArrayReturned_With_Valid_Data()
+        public void NUnitTest_QuickFilterDigit_InputArrayAsArgument_inputArrayReturned_With_Valid_Data()
         {
-            _outputArray = SortAndFilter.QuickFilterDigit(_inputArray, 6);
+            SortAndFilter.QuickFilterDigit(ref _inputArray, 6);
 
-            for (int itemArray = 0; itemArray < _outputArray.Length; itemArray++)
+            for (int itemArray = 0; itemArray < _inputArray.Length; itemArray++)
             {
-                Assert.IsTrue(SortAndFilter.IsDigit(_outputArray[itemArray], 6));
+                Assert.IsTrue(SortAndFilter.IsDigit(_inputArray[itemArray], 6));
             }
         }
 
@@ -71,16 +66,16 @@ namespace NUnitTestFilterDigit
         /// It is expected that the method QuickFilterDigit will be faster by the execution time.
         /// </summary>
         [Test]
-        public void NUnitTest_SlowFilterDigit_And_QuickFilterDigit_InputArrayAsArgument_OutputArrayReturned_For_Measurement_Time()
+        public void NUnitTest_SlowFilterDigit_And_QuickFilterDigit_InputArrayAsArgument_inputArrayReturned_For_Measurement_Time()
         {
             _watch.Reset();
             _watch.Start();
-            var _outputSlowFilter = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
             _watch.Stop();
             var slowTime = _watch.ElapsedMilliseconds;
             _watch.Reset();
             _watch.Start();
-            var _outputQuickFilter = SortAndFilter.SlowFilterDigit(_inputArray, 6);
+            SortAndFilter.SlowFilterDigit(ref _inputArray, 6);
             _watch.Stop();
             var quickTime = _watch.ElapsedMilliseconds;
             Assert.IsTrue(slowTime > quickTime);
@@ -95,7 +90,7 @@ namespace NUnitTestFilterDigit
         {
             this._inputArray = null;
 
-            Assert.Throws<ArgumentNullException>(() => SortAndFilter.SlowFilterDigit(_inputArray, 6));
+            Assert.Throws<ArgumentNullException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, 6));
         }
 
         /// <summary>
@@ -107,7 +102,7 @@ namespace NUnitTestFilterDigit
         {
             _inputArray = null;
 
-            Assert.Throws<ArgumentNullException>(() => SortAndFilter.QuickFilterDigit(_inputArray, 6));
+            Assert.Throws<ArgumentNullException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, 6));
         }
 
         /// <summary>
@@ -119,7 +114,7 @@ namespace NUnitTestFilterDigit
         {
             _inputArray = new int[0];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(_inputArray, 6));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, 6));
         }
 
         /// <summary>
@@ -131,7 +126,7 @@ namespace NUnitTestFilterDigit
         {
             _inputArray = new int[0];
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(_inputArray, 6));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, 6));
         }
 
         /// <summary>
@@ -143,7 +138,7 @@ namespace NUnitTestFilterDigit
         {
             int number = -1;
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(_inputArray, number));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, number));
         }
 
         /// <summary>
@@ -155,7 +150,7 @@ namespace NUnitTestFilterDigit
         {
             int number = -1;
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(_inputArray, number));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, number));
         }
 
         /// <summary>
@@ -167,7 +162,7 @@ namespace NUnitTestFilterDigit
         {
             int number = 10;
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(_inputArray, number));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, number));
         }
 
         /// <summary>
@@ -179,7 +174,7 @@ namespace NUnitTestFilterDigit
         {
             int number = 10;
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(_inputArray, number));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, number));
         }
 
         /// <summary>
@@ -191,7 +186,7 @@ namespace NUnitTestFilterDigit
         {
             Random random = new Random(0);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(_inputArray, random.Next(20000000, 200000000)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, random.Next(20000000, 200000000)));
         }
 
         /// <summary>
@@ -203,7 +198,7 @@ namespace NUnitTestFilterDigit
         {
             Random random = new Random(0);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(_inputArray, random.Next(20000000, 200000000)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, random.Next(20000000, 200000000)));
         }
 
         /// <summary>
@@ -217,7 +212,7 @@ namespace NUnitTestFilterDigit
         {
             Random random = new Random(0);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(_inputArray, random.Next(20000000, 200000000)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(ref _inputArray, random.Next(20000000, 200000000)));
         }
 
         /// <summary>
@@ -229,7 +224,7 @@ namespace NUnitTestFilterDigit
         {
             Random random = new Random(0);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(_inputArray, random.Next(-20000000, -200000000)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(ref _inputArray, random.Next(-20000000, -200000000)));
         }
     }
 }
