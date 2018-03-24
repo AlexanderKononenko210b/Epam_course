@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortAndFilterArray", "SortArray\SortAndFilterArray.csproj", "{370D0E16-5353-4E69-96B7-0D3AE7F02382}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSortAndFilter", "TestSortAndFilter\TestSortAndFilter.csproj", "{83F04C09-18FB-4E8B-AF69-6403A7546C1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortAndFilterArray.Test", "TestSortAndFilter\SortAndFilterArray.Test.csproj", "{83F04C09-18FB-4E8B-AF69-6403A7546C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

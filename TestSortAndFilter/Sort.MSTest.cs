@@ -10,7 +10,7 @@ namespace TestSortAndFilter
     [TestClass]
     public class MSUnitTestSort
     {
-        private int[] _inputArray;
+        private int[] inputArray;
 
         /// <summary>
         /// Constructor for create instance of MSUnitTestSort class
@@ -23,18 +23,18 @@ namespace TestSortAndFilter
             {
                 arrayForTest[itemArray] = random.Next(0, 100);
             }
-            _inputArray = arrayForTest;
+            inputArray = arrayForTest;
         }
 
         /// <summary>
         /// Test with valid data for the method QuickSort
         /// </summary>
         [TestMethod]
-        public void QuickSort_InputArrayAsArgument_InputArrayReturned_With_Valid_Data()
+        public void MSTest_QuickSortinputArrayAsArgumentinputArrayReturned_With_Valid_Data()
         {
-            SortAndFilter.QuickSort(ref _inputArray);
+            SortAndFilter.QuickSort( inputArray);
 
-            Assert.IsTrue(SortAndFilter.IsSort(ref _inputArray, TypeSortArray.Descend));
+            Assert.IsTrue(SortAndFilter.IsSort( inputArray, TypeSortArray.Descend));
 
         }
 
@@ -42,65 +42,65 @@ namespace TestSortAndFilter
         /// Test with valid data for the method MergeSort
         /// </summary>
         [TestMethod]
-        public void MergeSort_InputArrayAsArgument_InputArrayReturned_With_Valid_Data()
+        public void MSTest_MergeSortinputArrayAsArgumentinputArrayReturned_With_Valid_Data()
         {
-            _inputArray.CopyTo(_inputArray, 0);
+            inputArray.CopyTo(inputArray, 0);
 
-            SortAndFilter.MergeSort(ref _inputArray);
+            SortAndFilter.MergeSort( inputArray);
 
-            Assert.IsTrue(SortAndFilter.IsSort(ref _inputArray, TypeSortArray.Ascend));
+            Assert.IsTrue(SortAndFilter.IsSort( inputArray, TypeSortArray.Ascend));
         }
 
         /// <summary>
         /// Test to check for the occurrence of an exception ArgumentNullException 
-        /// in method QuickSort if the referenced array reference refers to null.
+        /// in method QuickSort if the erenced array reference refers to null.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void QuickSort_If_Input_Array_Is_Null()
+        public void MSTest_QuickSort_If_Input_Array_Is_Null()
         {
-            _inputArray = null;
+            inputArray = null;
 
-            SortAndFilter.QuickSort(ref _inputArray);
+            SortAndFilter.QuickSort( inputArray);
         }
 
         /// <summary>
         /// Test to check for the occurrence of an exception ArgumentNullException 
-        /// in method MergeSort if the referenced array reference refers to null.
+        /// in method MergeSort if the erenced array reference refers to null.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void MergeSort_If_Input_Array_Is_Null()
+        public void MSTest_MergeSort_If_Input_Array_Is_Null()
         {
-            _inputArray = null;
+            inputArray = null;
 
-            SortAndFilter.MergeSort(ref _inputArray);
+            SortAndFilter.MergeSort( inputArray);
         }
 
         /// <summary>
         /// Test to check for the occurrence of an exception ArgumentOutOfRangeException
-        /// in method QuickSort if the referenced array reference refers to array with 0 element.
+        /// in method QuickSort if the erenced array erence ers to array with 0 element.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void QuickSort_If_Input_Array_Length_Is_0()
+        public void MSTest_QuickSort_If_Input_Array_Length_Is_0()
         {
-            _inputArray = new int[0];
+            inputArray = new int[0];
 
-            SortAndFilter.QuickSort(ref _inputArray);
+            SortAndFilter.QuickSort( inputArray);
         }
 
         /// <summary>
         /// Test to check for the occurrence of an exception ArgumentOutOfRangeException
-        /// in method MergeSort if the referenced array reference refers to array with 0 element.
+        /// in method MergeSort if the erenced array erence ers to array with 0 element.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void MergeSort_If_Input_Array_Length_Is_0()
+        public void MSTest_MergeSort_If_Input_Array_Length_Is_0()
         {
-            _inputArray = new int[0];
+            inputArray = new int[0];
 
-            SortAndFilter.MergeSort(ref _inputArray);
+            SortAndFilter.MergeSort( inputArray);
         }
     }
 }

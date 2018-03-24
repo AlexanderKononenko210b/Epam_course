@@ -11,7 +11,7 @@ namespace SortAndFilterArray
     /// </summary>
     public static class SortAndFilter
     {
-        #region sort
+        #region Sort
 
         /// <summary>
         /// Method for quick sort.
@@ -22,7 +22,7 @@ namespace SortAndFilterArray
         /// </summary>
         /// <param name="inputArray">input one-dimensional array</param>
         /// <returns>rezalt array</returns>
-        public static void QuickSort(ref int[] inputArray)
+        public static void QuickSort(int[] inputArray)
         {
             if (inputArray == null)
             {
@@ -36,7 +36,7 @@ namespace SortAndFilterArray
 
             if (inputArray.Length > 1)
             {
-                QuickSortHelper(ref inputArray, 0, inputArray.Length - 1);
+                QuickSortHelper(inputArray, 0, inputArray.Length - 1);
             }
         }
 
@@ -48,7 +48,7 @@ namespace SortAndFilterArray
         /// recursively call the MergeSort.
         /// </summary>
         /// <param name="inputArray">input array</param>
-        public static void MergeSort(ref int[] inputArray)
+        public static void MergeSort(int[] inputArray)
         {
             if (inputArray == null)
             {
@@ -67,15 +67,15 @@ namespace SortAndFilterArray
 
             if (array1.Length > 1)
             {
-                MergeSort(ref array1);
+                MergeSort(array1);
             }
 
             if (array2.Length > 1)
             {
-                MergeSort(ref array2);
+                MergeSort(array2);
             }
 
-            MergeSortHelper(ref inputArray, ref array1, ref array2);
+            MergeSortHelper(inputArray, array1, array2);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input one-dimensional array</param>
         /// <param name="numberOfIndexLeft">the index of the left element of the array</param>
         /// <param name="numberOfIndexRight">the index of the right element of the array</param>
-        private static void QuickSortHelper(ref int[] inputArray, int numberOfIndexLeft, int numberOfIndexRight)
+        private static void QuickSortHelper(int[] inputArray, int numberOfIndexLeft, int numberOfIndexRight)
         {
             int i = numberOfIndexLeft,
                 j = numberOfIndexRight, 
@@ -120,12 +120,12 @@ namespace SortAndFilterArray
 
             if (i < numberOfIndexRight)
             {
-                QuickSortHelper(ref inputArray, i, numberOfIndexRight);
+                QuickSortHelper(inputArray, i, numberOfIndexRight);
             }
 
             if (numberOfIndexLeft < j)
             {
-                QuickSortHelper(ref inputArray, numberOfIndexLeft, j);
+                QuickSortHelper(inputArray, numberOfIndexLeft, j);
             }
         }
 
@@ -137,7 +137,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="array1">first array</param>
         /// <param name="array2">second array</param>
-        private static void MergeSortHelper(ref int[] inputArray, ref int[] array1, ref int[] array2)
+        private static void MergeSortHelper(int[] inputArray, int[] array1, int[] array2)
         {
             int indexOfArray1 = 0, indexOfArray2 = 0;
 
@@ -166,9 +166,9 @@ namespace SortAndFilterArray
             }
         }
 
-        #endregion sort
+        #endregion Sort
 
-        #region filter
+        #region Filter
 
         /// <summary>
         /// Slow method for verification include digit in element input array
@@ -176,38 +176,27 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="digit">number - filter</param>
         /// <returns>output array with element that contains digit</returns>
-        public static void SlowFilterDigit(ref int[] inputArray, int digit)
+        public static int[] SlowFilterDigit(int[] inputArray, int digit)
         {
-            // check the empty array
             if (inputArray == null)
             {
                 throw new ArgumentNullException($"Argument {nameof(inputArray)} is null");
             }
 
-            // check the empty array
             if (inputArray.Length == 0)
             {
                 throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputArray)} length is 0");
             }
 
-            // check the numeric of digit
             if (digit < 0 || digit > 9)
             {
                 throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be greater than 0 and less than 10");
             }
 
-            // check the border value type int
-            if (digit > int.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be less than 2 147 483 647");
-            }
-
             bool flag = false;
 
-            // digit as char
             var digitAsChar = char.GetNumericValue(digit.ToString(CultureInfo.CreateSpecificCulture("en-US"))[0]);
 
-            // rezalt array
             var rezaltCollection = new Collection<int>();
 
             for (int i = 0; i < inputArray.Length; i++)
@@ -230,7 +219,7 @@ namespace SortAndFilterArray
                 }
             }
 
-            inputArray = rezaltCollection.ToArray();
+            return rezaltCollection.ToArray();
         }
 
         /// <summary>
@@ -239,7 +228,7 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="digit">number - filter</param>
         /// <returns>output array with element that contains digit</returns>
-        public static void QuickFilterDigit(ref int[] inputArray, int digit)
+        public static int[] QuickFilterDigit(int[] inputArray, int digit)
         {
             if (inputArray == null)
             {
@@ -256,11 +245,6 @@ namespace SortAndFilterArray
                 throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be greater than 0 and less than 10");
             }
 
-            if (digit < int.MinValue || digit > int.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be less than 2 147 483 647");
-            }
-
             Collection<int> rezaltCollection = new Collection<int>();
 
             for (int i = 0; i < inputArray.Length; i++)
@@ -271,7 +255,7 @@ namespace SortAndFilterArray
                 }
             }
 
-            inputArray = rezaltCollection.ToArray();
+            return rezaltCollection.ToArray();
 
         }
 
@@ -297,9 +281,9 @@ namespace SortAndFilterArray
             return false;
         }
 
-        #endregion filter
+        #endregion Filter
 
-        #region testHelper
+        #region Helper
 
         /// <summary>
         /// Helper method for check is an array sorted or not sorted
@@ -307,38 +291,35 @@ namespace SortAndFilterArray
         /// <param name="inputArray">input array</param>
         /// <param name="typeSort">type sort</param>
         /// <returns>true if array is an array sorted and false if not sorted</returns>
-        public static bool IsSort(ref int [] inputArray, TypeSortArray typeSort)
+        public static bool IsSort(int[] inputArray, TypeSortArray typeSort)
         {
-            int flagIsSort = 0;
-
-            switch(typeSort)
+            switch (typeSort)
             {
                 case TypeSortArray.Descend:
-                    for (int itemArray = 0; itemArray < inputArray.Length-1; itemArray++)
+                    for (int itemArray = 0; itemArray < inputArray.Length - 1; itemArray++)
                     {
-                        if(inputArray[itemArray] >= inputArray[itemArray+1])
+                        if (inputArray[itemArray] < inputArray[itemArray + 1])
                         {
-                            flagIsSort++;
+                            return false;
                         }
                     }
                     break;
                 case TypeSortArray.Ascend:
                     for (int itemArray = 0; itemArray < inputArray.Length - 1; itemArray++)
                     {
-                        if (inputArray[itemArray] <= inputArray[itemArray+1])
+                        if (inputArray[itemArray] > inputArray[itemArray + 1])
                         {
-                            flagIsSort++;
+                            return false;
                         }
                     }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"Argument {nameof(typeSort)} is not suitable for selection conditions");
-
             }
 
-            return flagIsSort == inputArray.Length-1;
+            return true;
         }
 
-        #endregion testHelper
+        #endregion Helper
     }
 }
