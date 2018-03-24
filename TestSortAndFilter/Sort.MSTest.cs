@@ -5,7 +5,7 @@ using SortAndFilterArray;
 namespace TestSortAndFilter
 {
     /// <summary>
-    /// Class for test sort and filter methods
+    /// Class for test Sort methods
     /// </summary>
     [TestClass]
     public class MSUnitTestSort
