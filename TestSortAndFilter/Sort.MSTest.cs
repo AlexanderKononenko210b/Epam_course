@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SortAndFilterArray;
 
-namespace TestSortAndFilter
+namespace SortAndFilterArray.Test
 {
     /// <summary>
     /// Class for test Sort methods
@@ -32,9 +32,9 @@ namespace TestSortAndFilter
         [TestMethod]
         public void MSTest_QuickSortinputArrayAsArgumentinputArrayReturned_With_Valid_Data()
         {
-            SortAndFilter.QuickSort( inputArray);
+            SortArray.QuickSort( inputArray);
 
-            Assert.IsTrue(SortAndFilter.IsSort( inputArray, TypeSortArray.Descend));
+            Assert.IsTrue(SortArray.IsSort( inputArray, TypeSortArray.Descend));
 
         }
 
@@ -46,9 +46,9 @@ namespace TestSortAndFilter
         {
             inputArray.CopyTo(inputArray, 0);
 
-            SortAndFilter.MergeSort( inputArray);
+            SortArray.MergeSort( inputArray);
 
-            Assert.IsTrue(SortAndFilter.IsSort( inputArray, TypeSortArray.Ascend));
+            Assert.IsTrue(SortArray.IsSort( inputArray, TypeSortArray.Ascend));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace TestSortAndFilter
         {
             inputArray = null;
 
-            SortAndFilter.QuickSort( inputArray);
+            SortArray.QuickSort( inputArray);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace TestSortAndFilter
         {
             inputArray = null;
 
-            SortAndFilter.MergeSort( inputArray);
+            SortArray.MergeSort( inputArray);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace TestSortAndFilter
         {
             inputArray = new int[0];
 
-            SortAndFilter.QuickSort( inputArray);
+            SortArray.QuickSort( inputArray);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace TestSortAndFilter
         {
             inputArray = new int[0];
 
-            SortAndFilter.MergeSort( inputArray);
+            SortArray.MergeSort( inputArray);
         }
     }
 }

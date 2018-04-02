@@ -53,6 +53,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeArrayOfNumbers.NUnitTest.cs" />
     <Compile Include="FilterDigit.MSTest.cs" />
     <Compile Include="FilterDigit.NUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Diagnostics;
 using SortAndFilterArray;
 
-namespace NUnitTestFilterDigit
+namespace SortAndFilterArray.Test
 {
     /// <summary>
     /// Class for test SlowFilterDigit and QuickFilterDigit with NUnitTest
@@ -15,119 +15,65 @@ namespace NUnitTestFilterDigit
         /// Test with valid data for the method SlowFilterDigit
         /// </summary>
         [Test]
-        public void NUnitTest_SlowFilterDigit_With_Valid_Data()
+        public void NUnitTest_FilterDigit_With_Valid_Data()
         {
             var arrayForTest = new int[1000000];
             Random random = new Random(0);
             for (int itemArray = 0; itemArray < arrayForTest.Length; itemArray++)
             {
-                arrayForTest[itemArray] = random.Next(0, 100);
+                arrayForTest[itemArray] = random.Next(0, 100000);
             }
 
-            var outputArray = SortAndFilter.SlowFilterDigit(arrayForTest, 6);
+            var filter = 6;
 
-            for (int itemArray = 0; itemArray < outputArray.Length; itemArray++)
-            {
-                Assert.IsTrue(SortAndFilter.IsDigit(outputArray[itemArray], 6));
-            }
+            var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
+
+            var outputArray = FilterAndChange.FilterDigit(arrayForTest, filterPredicate);
+
+            Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(outputArray, filterPredicate));
         }
 
         /// <summary>
-        /// Test with valid data for the method QuickFilterDigit
+        /// Test method FilterDigit if expected ArgumentNullException
         /// </summary>
         [Test]
-        public void NUnitTest_QuickFilterDigit_With_Valid_Data()
+        public void NUnitTest_SlowFilterDigit_Expected_ArgumentNullException()
         {
-            var arrayForTest = new int[1000000];
-            Random random = new Random(0);
-            for (int itemArray = 0; itemArray < arrayForTest.Length; itemArray++)
-            {
-                arrayForTest[itemArray] = random.Next(0, 100);
-            }
+            int[] inputArray = null;
 
-            var outputArray = SortAndFilter.QuickFilterDigit(arrayForTest, 6);
+            var filter = 6;
 
-            for (int itemArray = 0; itemArray < outputArray.Length; itemArray++)
-            {
-                Assert.IsTrue(SortAndFilter.IsDigit(outputArray[itemArray], 6));
-            }
+            var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
+
+            Assert.Throws<ArgumentNullException>(() => FilterAndChange.FilterDigit(inputArray, filterPredicate));
         }
 
         /// <summary>
-        /// Test to check the execution time of methods SlowFilterDigit and QuickFilterDigit. 
-        /// It is expected that the method QuickFilterDigit will be faster by the execution time.
+        /// Test to check for the occurrence of an exception ArgumentOutOfRangeException
+        /// in method FilterDigit if the erenced array erence ers to array with 0 element.
         /// </summary>
         [Test]
-        public void NUnitTest_SlowFilterDigit_And_QuickFilterDigit_Measurement_Time()
+        public void NUnitTest_FilterDigit_If_Input_Array_Length_Is_0()
         {
-            var arrayForTest = new int[1000000];
-            Random random = new Random(0);
-            for (int itemArray = 0; itemArray < arrayForTest.Length; itemArray++)
-            {
-                arrayForTest[itemArray] = random.Next(0, 100);
-            }
+            int[] inputArray = new int[0];
 
-            Stopwatch stopwatch = new Stopwatch();
+            var filter = 6;
 
-            stopwatch.Start();
+            var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            var outputArrayQuick = SortAndFilter.SlowFilterDigit(arrayForTest, 6);
-
-            stopwatch.Stop();
-
-            var slowTime = stopwatch.ElapsedMilliseconds;
-
-            stopwatch.Reset();
-
-            stopwatch.Start();
-
-            var outputArraySlow = SortAndFilter.QuickFilterDigit(arrayForTest, 6);
-
-            stopwatch.Stop();
-
-            var quickTime = stopwatch.ElapsedMilliseconds;
-
-            Assert.IsTrue(slowTime > quickTime);
+            Assert.Throws<ArgumentOutOfRangeException>(() => FilterAndChange.FilterDigit(inputArray, filterPredicate));
         }
 
         /// <summary>
-        /// Test method SlowFilterDigit if expected ArgumentNullException
+        /// Test to check for the occurrence of an exception ArgumentOutOfRangeException
+        /// in method FilterDigit if the instance class FilterArrayIntegerNumbers is null.
         /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">digit</param>
-        [TestCase(null, 10)]
-        public void NUnitTest_SlowFilterDigit_Expected_ArgumentNullException(int[] inputArray, int digit)
-            => Assert.Throws<ArgumentNullException>(() => SortAndFilter.SlowFilterDigit(inputArray, digit));
+        [Test]
+        public void NUnitTest_FilterDigit_If_Input_Number_Less_Then_0()
+        {
+            var filter = -1;
 
-        /// <summary>
-        /// Test method QuickFilterDigit if expected ArgumentNullException
-        /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">digit</param>
-        [TestCase(null, 10)]
-        public void NUnitTest_QuickFilterDigit_Expected_ArgumentNullException(int[] inputArray, int digit)
-            => Assert.Throws<ArgumentNullException>(() => SortAndFilter.QuickFilterDigit(inputArray, digit));
-
-        /// <summary>
-        /// Test method SlowFilterDigit if expected ArgumentOutOfRangeException
-        /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">digit</param>
-        [TestCase(new int[0], -1)]
-        [TestCase(new int[5] { 12, 45, 6, 5, 8 }, -1)]
-        [TestCase(new int[5] { 12, 45, 6, 5, 8 }, 10)]
-        public void NUnitTest_SlowFilterDigit_Expected_ArgumentOutOfRangeException(int[] inputArray, int digit)
-            => Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.SlowFilterDigit(inputArray, digit));
-
-        /// <summary>
-        /// Test method QuickFilterDigit if expected ArgumentOutOfRangeException
-        /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">digit</param>
-        [TestCase(new int[0], -1)]
-        [TestCase(new int[5] { 12, 45, 6, 5, 8 }, -1)]
-        [TestCase(new int[5] { 12, 45, 6, 5, 8 }, 10)]
-        public void NUnitTest_QuickFilterDigit_Expected_ArgumentOutOfRangeException(int[] inputArray, int digit)
-            => Assert.Throws<ArgumentOutOfRangeException>(() => SortAndFilter.QuickFilterDigit(inputArray, digit));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new FilterAndChange.FilterArrayIntegerNumbers(filter));
+        }
     }
 }

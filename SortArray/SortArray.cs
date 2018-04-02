@@ -9,7 +9,7 @@ namespace SortAndFilterArray
     /// <summary>
     /// Static class for sort one-dimensional array
     /// </summary>
-    public static class SortAndFilter
+    public class SortArray
     {
         #region Sort
 
@@ -167,121 +167,6 @@ namespace SortAndFilterArray
         }
 
         #endregion Sort
-
-        #region Filter
-
-        /// <summary>
-        /// Slow method for verification include digit in element input array
-        /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">number - filter</param>
-        /// <returns>output array with element that contains digit</returns>
-        public static int[] SlowFilterDigit(int[] inputArray, int digit)
-        {
-            if (inputArray == null)
-            {
-                throw new ArgumentNullException($"Argument {nameof(inputArray)} is null");
-            }
-
-            if (inputArray.Length == 0)
-            {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputArray)} length is 0");
-            }
-
-            if (digit < 0 || digit > 9)
-            {
-                throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be greater than 0 and less than 10");
-            }
-
-            bool flag = false;
-
-            var digitAsChar = char.GetNumericValue(digit.ToString(CultureInfo.CreateSpecificCulture("en-US"))[0]);
-
-            var rezaltCollection = new Collection<int>();
-
-            for (int i = 0; i < inputArray.Length; i++)
-            {
-                var elementArrayAsString = inputArray[i].ToString(CultureInfo.CreateSpecificCulture("en-US"));
-
-                foreach (char charItem in elementArrayAsString)
-                {
-                    if (char.GetNumericValue(charItem) == digitAsChar)
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if (flag == true)
-                {
-                    rezaltCollection.Add(inputArray[i]);
-                    flag = false;
-                }
-            }
-
-            return rezaltCollection.ToArray();
-        }
-
-        /// <summary>
-        /// Method for verification include digit in element input array
-        /// </summary>
-        /// <param name="inputArray">input array</param>
-        /// <param name="digit">number - filter</param>
-        /// <returns>output array with element that contains digit</returns>
-        public static int[] QuickFilterDigit(int[] inputArray, int digit)
-        {
-            if (inputArray == null)
-            {
-                throw new ArgumentNullException($"Argument {nameof(inputArray)} is null");
-            }
-
-            if (inputArray.Length == 0)
-            {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputArray)} length is 0");
-            }
-
-            if (digit < 0 || digit > 9)
-            {
-                throw new ArgumentOutOfRangeException($"Digit`s {nameof(digit)} must be greater than 0 and less than 10");
-            }
-
-            Collection<int> rezaltCollection = new Collection<int>();
-
-            for (int i = 0; i < inputArray.Length; i++)
-            {
-                if (IsDigit(inputArray[i], digit))
-                {
-                    rezaltCollection.Add(inputArray[i]);
-                }
-            }
-
-            return rezaltCollection.ToArray();
-
-        }
-
-        /// <summary>
-        /// Private method to determine whether a number in an element of an array
-        /// </summary>
-        /// <param name="itemArray">element of array</param>
-        /// <param name="digit">number - filter</param>
-        /// <returns>true if element of array contains digit and false if he isn`t contains digit </returns>
-        public static bool IsDigit(int itemArray, int digit)
-        {
-            do
-            {
-                if (itemArray % 10 == digit)
-                {
-                    return true;
-                }
-
-                itemArray = itemArray / 10;
-            }
-            while (itemArray != 0);
-
-            return false;
-        }
-
-        #endregion Filter
 
         #region Helper
 
