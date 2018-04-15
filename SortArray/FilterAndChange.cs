@@ -1,10 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SortAndFilterArray
 {
@@ -230,6 +228,49 @@ namespace SortAndFilterArray
 
         }
 
+        /// <summary>
+        /// Method for search in array predicate in general type
+        /// </summary>
+        /// <typeparam name="T">type</typeparam>
+        /// <param name="inputEnumerable">input array</param>
+        /// <param name="predicate">predicate</param>
+        /// <returns>IEnumarable T</returns>
+        public static IEnumerable<T> FilterDigit<T>(this T[] inputEnumerable, Func<T, bool> predicate)
+        {
+            if (inputEnumerable == null)
+            {
+                throw new ArgumentNullException($"Argument {nameof(inputEnumerable)} is null");
+            }
+
+            if (inputEnumerable.Count() == 0)
+            {
+                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} count is 0");
+            }
+
+            if (predicate == null)
+            {
+                throw new ArgumentOutOfRangeException($"Argument { nameof(predicate) } is null");
+            }
+
+            return FilterDigitSearcher<T>(inputEnumerable, predicate);
+        }
+
+        /// <summary>
+        /// Block state for search predicate
+        /// </summary>
+        /// <typeparam name="T">type</typeparam>
+        /// <param name="inputEnumerable">input Array</param>
+        /// <param name="predicate">delegate predicate</param>
+        /// <returns>IEnumarable<typeparamref name="T"/></returns>
+        private static IEnumerable<T> FilterDigitSearcher<T>(T[] inputEnumerable, Func<T, bool> predicate)
+        {
+            foreach(T item in inputEnumerable)
+            {
+                if(predicate(item))
+                    yield return item;
+            }
+        }
+
         #endregion
 
         #region ChangeArray
@@ -308,6 +349,22 @@ namespace SortAndFilterArray
                     return false;
                 }
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Method for verification change in element output array
+        /// </summary>
+        /// <param name="inputArray">input array</param>
+        /// <param name="predicate">filter value</param>
+        /// <returns>true if all elements in output array contain filter number</returns>
+        public static bool FilterInGeneralHelper(int outPutNumber, Func<int, bool> predicate)
+        {
+                if (!predicate(outPutNumber))
+                {
+                    return false;
+                }
 
             return true;
         }
