@@ -1,21 +1,17 @@
 ﻿using System;
 using NUnit.Framework;
-using System.Diagnostics;
 using SortAndFilterArray;
 
-namespace SortAndFilterArray.Test
+namespace TestSortAndFilter
 {
-    /// <summary>
-    /// Class for test SlowFilterDigit and QuickFilterDigit with NUnitTest
-    /// </summary>
     [TestFixture]
-    public class FilterDigitNUnitTest
+    public class DelegateFilterDigitNUnitTest
     {
         /// <summary>
         /// Test with valid data for the method SlowFilterDigit
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_With_Valid_Data()
+        public void NUnitTest_FilterDigit_In_General_With_Valid_Data()
         {
             var arrayForTest = new int[1000000];
             Random random = new Random(0);
@@ -28,16 +24,17 @@ namespace SortAndFilterArray.Test
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            var outputArray = FilterAndChange.FilterDigit(arrayForTest, filterPredicate);
-
-            Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(outputArray, filterPredicate));
+            foreach (int item in arrayForTest.FilterDigit(filterPredicate.IsMatch))
+            {
+                Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(item, filterPredicate.IsMatch));
+            }
         }
 
         /// <summary>
         /// Test method FilterDigit if expected ArgumentNullException
         /// </summary>
         [Test]
-        public void NUnitTest_SlowFilterDigit_Expected_ArgumentNullException()
+        public void NUnitTest_FilterDigit_In_General_Expected_ArgumentNullException()
         {
             int[] inputArray = null;
 
@@ -53,7 +50,7 @@ namespace SortAndFilterArray.Test
         /// in method FilterDigit if the erenced array erence ers to array with 0 element.
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_If_Input_Array_Length_Is_0()
+        public void NUnitTest_FilterDigit_In_General_If_Input_Array_Length_Is_0()
         {
             int[] inputArray = new int[0];
 
@@ -69,7 +66,7 @@ namespace SortAndFilterArray.Test
         /// in method FilterDigit if the instance class FilterArrayIntegerNumbers is null.
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_If_Input_Number_Less_Then_0()
+        public void NUnitTest_FilterDigit_InGeneral_If_Input_Number_Less_Then_0()
         {
             var filter = -1;
 

@@ -1,17 +1,21 @@
 ﻿using System;
 using NUnit.Framework;
+using System.Diagnostics;
 using SortAndFilterArray;
 
-namespace TestSortAndFilter
+namespace SortAndFilterArray.Test
 {
+    /// <summary>
+    /// Class for test SlowFilterDigit and QuickFilterDigit with NUnitTest
+    /// </summary>
     [TestFixture]
-    public class FilterDigitInGeneralNUnitTest
+    public class InterfaceFilterDigitNUnitTest
     {
         /// <summary>
         /// Test with valid data for the method SlowFilterDigit
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_In_General_With_Valid_Data()
+        public void NUnitTest_FilterDigit_With_Valid_Data()
         {
             var arrayForTest = new int[1000000];
             Random random = new Random(0);
@@ -24,9 +28,9 @@ namespace TestSortAndFilter
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            foreach (int item in arrayForTest.FilterDigit(filterPredicate.IsMatch))
+            foreach (int item in arrayForTest.FilterDigit(filterPredicate))
             {
-                Assert.IsTrue(FilterAndChange.FilterInGeneralHelper(item, filterPredicate.IsMatch));
+                Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(item, filterPredicate));
             }
         }
 
@@ -34,7 +38,7 @@ namespace TestSortAndFilter
         /// Test method FilterDigit if expected ArgumentNullException
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_In_General_Expected_ArgumentNullException()
+        public void NUnitTest_SlowFilterDigit_Expected_ArgumentNullException()
         {
             int[] inputArray = null;
 
@@ -42,7 +46,7 @@ namespace TestSortAndFilter
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            Assert.Throws<ArgumentNullException>(() => FilterAndChange.FilterDigit(inputArray, filterPredicate));
+            Assert.Throws<ArgumentNullException>(() => inputArray.FilterDigit(filterPredicate));
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace TestSortAndFilter
         /// in method FilterDigit if the erenced array erence ers to array with 0 element.
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_In_General_If_Input_Array_Length_Is_0()
+        public void NUnitTest_FilterDigit_If_Input_Array_Length_Is_0()
         {
             int[] inputArray = new int[0];
 
@@ -58,7 +62,7 @@ namespace TestSortAndFilter
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => FilterAndChange.FilterDigit(inputArray, filterPredicate));
+            Assert.Throws<ArgumentOutOfRangeException>(() => inputArray.FilterDigit(filterPredicate));
         }
 
         /// <summary>
@@ -66,7 +70,7 @@ namespace TestSortAndFilter
         /// in method FilterDigit if the instance class FilterArrayIntegerNumbers is null.
         /// </summary>
         [Test]
-        public void NUnitTest_FilterDigit_InGeneral_If_Input_Number_Less_Then_0()
+        public void NUnitTest_FilterDigit_If_Input_Number_Less_Then_0()
         {
             var filter = -1;
 

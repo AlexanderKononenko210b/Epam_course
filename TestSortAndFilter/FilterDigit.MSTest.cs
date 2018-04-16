@@ -28,9 +28,10 @@ namespace SortAndFilterArray.Test
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            var outputArray = FilterAndChange.FilterDigit(arrayForTest, filterPredicate);
-
-            Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(outputArray, filterPredicate));
+            foreach (int item in arrayForTest.FilterDigit(filterPredicate))
+            {
+                Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(item, filterPredicate));
+            }
         }
 
         /// <summary>
@@ -47,7 +48,10 @@ namespace SortAndFilterArray.Test
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            var outputArray = FilterAndChange.FilterDigit(inputArray, filterPredicate);
+            foreach (int item in inputArray.FilterDigit(filterPredicate))
+            {
+                Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(item, filterPredicate));
+            }
         }
 
         /// <summary>
@@ -64,7 +68,10 @@ namespace SortAndFilterArray.Test
 
             var filterPredicate = new FilterAndChange.FilterArrayIntegerNumbers(filter);
 
-            var outputArray = FilterAndChange.FilterDigit(inputArray, filterPredicate);
+            foreach (int item in inputArray.FilterDigit(filterPredicate))
+            {
+                Assert.IsTrue(FilterAndChange.IsNumberFilterHelper(item, filterPredicate));
+            }
         }
 
         /// <summary>

@@ -53,10 +53,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChangeArrayOfNumbers.NUnitTest.cs" />
+    <Compile Include="DelegateChangeArrayOfNumbers.cs" />
+    <Compile Include="InterfaceChangeArrayOfNumbers.NUnitTest.cs" />
     <Compile Include="FilterDigit.MSTest.cs" />
-    <Compile Include="FilterDigit.NUnitTest.cs" />
-    <Compile Include="FilterDigitInGeneral.NUnitTest.cs" />
+    <Compile Include="InterfaceFilterDigit.NUnitTest.cs" />
+    <Compile Include="DelegateFilterDigit.NUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sort.MSTest.cs" />
   </ItemGroup>
