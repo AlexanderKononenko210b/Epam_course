@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,17 +12,17 @@ namespace SortAndFilterArray
         /// <summary>
         /// Interface with method search digit or number in element integer array
         /// </summary>
-        public interface IFilterNumber<T>
+        public interface IFilterNumber<in TSource>
         {
-            bool IsMatch(T number);
+            bool IsMatch(TSource number);
         }
 
         /// <summary>
         /// Interface with method change number
         /// </summary>
-        public interface IChangeNumber<T>
+        public interface IChangeNumber<in TSource, out TOutput>
         {
-            T ChangeNumberMultipl(T number);
+            TOutput ChangeNumberMultipl(TSource number);
         }
 
         #endregion
@@ -42,18 +41,13 @@ namespace SortAndFilterArray
             /// </summary>
             public int FilterNumber
             {
-                get
-                {
-                    return filterNumber;
-                }
+                get => filterNumber;
                 set
-                {
+                { 
                     if (value < 0)
-                    {
-                        throw new ArgumentOutOfRangeException($"Value`s must be greater or equals 0");
-                    }
+                        throw new ArgumentOutOfRangeException($"Value`s {nameof(filterNumber)} must be greater or equals 0");
 
-                    value = filterNumber;
+                    filterNumber = value;
                 }
             }
 
@@ -78,42 +72,32 @@ namespace SortAndFilterArray
                 var arrayDigitFilter = DigitInArray(this.FilterNumber);
 
                 if (arraySourceNumber.Length < arrayDigitFilter.Length)
-                {
                     return false;
-                }
-                else
+
+                if (arraySourceNumber.Length == arrayDigitFilter.Length)
+                    return (item ^ this.FilterNumber) == 0;
+
+                int countIteration = 0, countHelper = 0;
+                var numberHelper = 0.0;
+
+                while (countIteration + arrayDigitFilter.Length <= arraySourceNumber.Length)
                 {
-                    if (arraySourceNumber.Length == arrayDigitFilter.Length)
+                    for (int j = countIteration; j < arrayDigitFilter.Length + countIteration; j++)
                     {
-                        return (item ^ this.FilterNumber) == 0;
+                        countHelper++;
+                        numberHelper += arraySourceNumber[j] / Math.Pow(10, countHelper);
                     }
-                    else
-                    {
-                        int countIteration = 0, countHelper = 0;
-                        var numberHelper = 0.0;
 
-                        while (countIteration + arrayDigitFilter.Length <= arraySourceNumber.Length)
-                        {
-                            for (int j = countIteration; j < arrayDigitFilter.Length + countIteration; j++)
-                            {
-                                countHelper++;
-                                numberHelper += arraySourceNumber[j] / Math.Pow(10, countHelper);
-                            }
+                    numberHelper *= Math.Pow(10, countHelper);
 
-                            numberHelper *= Math.Pow(10, countHelper);
+                    var resultNumber = (int)numberHelper;
 
-                            var resultNumber = (int)numberHelper;
+                    if ((resultNumber ^ this.FilterNumber) == 0)
+                        return true;
 
-                            if ((resultNumber ^ this.FilterNumber) == 0)
-                            {
-                                return true;
-                            }
-
-                            countIteration++;
-                            numberHelper = 0;
-                            countHelper = 0;
-                        }
-                    }
+                    countIteration++;
+                    numberHelper = 0;
+                    countHelper = 0;
                 }
 
                 return false;
@@ -147,7 +131,7 @@ namespace SortAndFilterArray
         /// <summary>
         /// Class change number in array
         /// </summary>
-        public class ChangeNumber : IChangeNumber<int>
+        public class ChangeNumber : IChangeNumber<int, int>
         {
             private int valueMultipl;
 
@@ -156,18 +140,14 @@ namespace SortAndFilterArray
             /// </summary>
             public int ValueMultipl
             {
-                get
-                {
-                    return valueMultipl;
-                }
+                get => valueMultipl;
+
                 set
                 {
                     if (value < 0)
-                    {
                         throw new ArgumentOutOfRangeException($"Value`s must be greater or equals 0");
-                    }
 
-                    value = valueMultipl;
+                    valueMultipl = value;
                 }
             }
 
@@ -194,20 +174,23 @@ namespace SortAndFilterArray
         /// <summary>
         /// Method for search in array with interface in general type
         /// </summary>
-        /// <typeparam name="T">type</typeparam>
-        /// <param name="inputEnumerable">input array</param>
+        /// <typeparam name="TSource">type</typeparam>
+        /// <param name="inputEnumerable">input instance which type`s implement IEnumerable<typeparamref name="TSource"/></param>
         /// <param name="predicate">predicate</param>
-        /// <returns>IEnumarable T</returns>
-        public static IEnumerable<T> FilterDigit<T>(this T[] inputEnumerable, IFilterNumber<T> predicate)
+        /// <returns>IEnumarable<typeparamref name="TSource"/></returns>
+        public static IEnumerable<TSource> FilterDigit<TSource>(this IEnumerable<TSource> inputEnumerable, IFilterNumber<TSource> predicate)
         {
             if (inputEnumerable == null)
             {
                 throw new ArgumentNullException($"Argument {nameof(inputEnumerable)} is null");
             }
 
-            if (inputEnumerable.Length == 0)
+            if (inputEnumerable.GetType().IsArray)
             {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} length is 0");
+                var propertyInfoLength = inputEnumerable.GetType().GetProperty("Length");
+
+                if ((int)propertyInfoLength.GetValue(inputEnumerable, null) == 0)
+                    throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} lenght should be more than 0");
             }
 
             if (predicate == null)
@@ -220,22 +203,25 @@ namespace SortAndFilterArray
         }
 
         /// <summary>
-        /// Method for search in array predicate in general type
+        /// Method for search in array with delegate in general type
         /// </summary>
-        /// <typeparam name="T">type</typeparam>
-        /// <param name="inputEnumerable">input array</param>
+        /// <typeparam name="TSource">type</typeparam>
+        /// <param name="inputEnumerable">input instance which type`s implement IEnumerable<typeparamref name="TSource"/></param>
         /// <param name="predicate">predicate</param>
-        /// <returns>IEnumarable T</returns>
-        public static IEnumerable<T> FilterDigit<T>(this T[] inputEnumerable, Func<T, bool> predicate)
+        /// <returns>IEnumarable<typeparamref name="TSource"/></returns>
+        public static IEnumerable<TSource> FilterDigit<TSource>(this IEnumerable<TSource> inputEnumerable, Func<TSource, bool> predicate)
         {
             if (inputEnumerable == null)
             {
                 throw new ArgumentNullException($"Argument {nameof(inputEnumerable)} is null");
             }
 
-            if (inputEnumerable.Length == 0)
+            if (inputEnumerable.GetType().IsArray)
             {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} count is 0");
+                var propertyInfoLength = inputEnumerable.GetType().GetProperty("Length");
+
+                if ((int)propertyInfoLength.GetValue(inputEnumerable, null) == 0)
+                    throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} lenght should be more than 0");
             }
 
             if (predicate == null)
@@ -247,15 +233,15 @@ namespace SortAndFilterArray
         }
 
         /// <summary>
-        /// Block state for search predicate
+        /// Block state for search in input collection implement IEnumerable predicate
         /// </summary>
-        /// <typeparam name="T">type</typeparam>
-        /// <param name="inputEnumerable">input Array</param>
-        /// <param name="predicate">delegate predicate</param>
-        /// <returns>IEnumarable<typeparamref name="T"/></returns>
-        private static IEnumerable<T> FilterDigitSearcher<T>(T[] inputEnumerable, Func<T, bool> predicate)
+        /// <typeparam name="TSource">type</typeparam>
+        /// <param name="inputEnumerable">input instance which type`s implement IEnumerable<typeparamref name="TSource"/></param>
+        /// <param name="predicate">predicate</param>
+        /// <returns>IEnumarable<typeparamref name="TSource"/></returns>
+        private static IEnumerable<TSource> FilterDigitSearcher<TSource>(this IEnumerable<TSource> inputEnumerable, Func<TSource, bool> predicate)
         {
-            foreach(T item in inputEnumerable)
+            foreach(TSource item in inputEnumerable)
             {
                 if(predicate(item))
                     yield return item;
@@ -269,19 +255,22 @@ namespace SortAndFilterArray
         /// <summary>
         /// Extension method change array using interface
         /// </summary>
-        /// <param name="inputEnumerable">input array</param>
-        /// <param name="conditionInterface">instance class ChangeNumber</param>
-        /// <returns>array with change number</returns>
-        public static IEnumerable<T> ChangeArrayElements<T>(this T[] inputEnumerable, IChangeNumber<T> conditionInterface)
+        /// <param name="inputEnumerable">input instance which type`s implement IEnumerable<typeparamref name="TSource"/></param>
+        /// <param name="conditionInterface">instance class ChangeNumber which implement IChangeNumber</param>
+        /// <returns>IEnumarable<typeparamref name="TOutput"/></returns>
+        public static IEnumerable<TOutput> ChangeArrayElements<TSource, TOutput>(this IEnumerable<TSource> inputEnumerable, IChangeNumber<TSource, TOutput> conditionInterface)
         {
             if (inputEnumerable == null)
             {
                 throw new ArgumentNullException($"Argument {nameof(inputEnumerable)} is null");
             }
 
-            if (inputEnumerable.Length == 0)
+            if (inputEnumerable.GetType().IsArray)
             {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} length is 0");
+                var propertyInfoLength = inputEnumerable.GetType().GetProperty("Length");
+
+                if ((int)propertyInfoLength.GetValue(inputEnumerable, null) == 0)
+                    throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} lenght should be more than 0");
             }
 
             if (conditionInterface == null)
@@ -295,20 +284,22 @@ namespace SortAndFilterArray
         /// <summary>
         /// Extension method change array using delegate
         /// </summary>
-        /// <typeparam name="T">type</typeparam>
-        /// <param name="inputEnumerable">input array</param>
-        /// <param name="conditionDelegate">delegate incapsulation method for change inputEnumerable</param>
-        /// <returns>IEnumarable T</returns>
-        public static IEnumerable<T> ChangeArrayElements<T>(this T[] inputEnumerable, Func<T, T> conditionDelegate)
+        /// <param name="inputEnumerable">input instance which type`s implement IEnumerable<typeparamref name="TSource"/></param>
+        /// <param name="conditionDelegate">instance delegate incapsulating logic method</param>
+        /// <returns>IEnumarable<typeparamref name="TOutput"/></returns>
+        public static IEnumerable<TOutput> ChangeArrayElements<TSource, TOutput>(this IEnumerable<TSource> inputEnumerable, Func<TSource, TOutput> conditionDelegate)
         {
             if (inputEnumerable == null)
             {
                 throw new ArgumentNullException($"Argument {nameof(inputEnumerable)} is null");
             }
 
-            if (inputEnumerable.Length == 0)
+            if (inputEnumerable.GetType().IsArray)
             {
-                throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} count is 0");
+                var propertyInfoLength = inputEnumerable.GetType().GetProperty("Length");
+
+                if ((int)propertyInfoLength.GetValue(inputEnumerable, null) == 0)
+                    throw new ArgumentOutOfRangeException($"Argument`s {nameof(inputEnumerable)} lenght should be more than 0");
             }
 
             if (conditionDelegate == null)
@@ -322,15 +313,16 @@ namespace SortAndFilterArray
         /// <summary>
         /// Block state for change input Enumerable
         /// </summary>
-        /// <typeparam name="T">type</typeparam>
+        /// <typeparam name="TSource"> input type</typeparam>
+        /// <typeparam name="TOutput"> output type</typeparam>
         /// <param name="inputEnumerable">input Array</param>
         /// <param name="changeDelegate">delegate incapsulation method for change inputEnumerable</param>
-        /// <returns>IEnumarable<typeparamref name="T"/></returns>
-        private static IEnumerable<T> Changer<T>(T[] inputEnumerable, Func<T, T> changeDelegate)
+        /// <returns>IEnumarable<typeparamref name="TOutput"/></returns>
+        private static IEnumerable<TOutput> Changer<TSource, TOutput>(IEnumerable<TSource> inputEnumerable, Func<TSource, TOutput> changeDelegate)
         {
-            foreach (T item in inputEnumerable)
+            foreach (TSource item in inputEnumerable)
             {
-                var res = changeDelegate(item);
+                TOutput res = changeDelegate(item);
                     yield return res;
             }
         }
@@ -346,7 +338,7 @@ namespace SortAndFilterArray
         /// <param name="outputNumber">outnput number</param>
         /// <param name="condition">value for change element</param>
         /// <returns>true if change element all element in array</returns>
-        public static bool IsNumberChangeHelper(int inputNumber, int outputNumber, IChangeNumber<int> condition)
+        public static bool IsNumberChangeHelper(int inputNumber, int outputNumber, IChangeNumber<int, int> condition)
         {
             if (condition.ChangeNumberMultipl(inputNumber) != outputNumber)
                 return false;
